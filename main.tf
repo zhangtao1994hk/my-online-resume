@@ -40,7 +40,9 @@ module "resume_site" {
 # 管理 GitHub 仓库（如果你想保留的话）
 resource "github_repository" "resume_repo" {
   name        = "my-online-resume"
+  # tfsec:ignore:github-repositories-private
   visibility  = "public"
+  vulnerability_alerts = true
 }
 
 # --- 核心：状态平移，防止删除重建 ---
