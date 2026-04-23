@@ -1,4 +1,6 @@
 terraform {
+  required_version = ">= 1.5.0"
+ 
   backend "gcs" {
     bucket = "zhangtao-tf-state"
     prefix = "terraform/resume"
