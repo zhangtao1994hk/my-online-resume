@@ -8,7 +8,7 @@ async function handleRequest(request) {
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>Zhang Tao - SRE Resume</title>
+      <title>张 涛 Zhang Tao - SRE Resume</title>
       <style>
         body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f4f4; }
         .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
