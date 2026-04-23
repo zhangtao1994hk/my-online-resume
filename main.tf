@@ -1,8 +1,7 @@
 terraform {
-  backend "gcs"{
+  backend "gcs" {
     bucket = "zhangtao-tf-state"
     prefix = "terraform/resume"
-
   }
   required_providers {
     github = {
@@ -16,66 +15,39 @@ terraform {
   }
 }
 
-
-variable "github_token" {
-  description = "GitHub Personal Access Token"
-  type        = string
-  sensitive   = true
-}
-
-variable "cloudflare_api_token" {
-  description = "Cloudflare API Token"
-  type        = string
-  sensitive   = true
-}
-
-variable "cloudflare_account_id" {
-  type = string
-}
-
-variable "cloudflare_zone_id" {
-  type = string
-}
-
 provider "github" {
   token = var.github_token
+  owner = "zhangtao1994hk"
 }
 
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+# 调用我们刚才写的模块
+module "resume_site" {
+  source      = "./modules/cloudflare-worker"
+  
+  account_id  = var.cloudflare_account_id
+  zone_id     = var.cloudflare_zone_id
+  script_name = "resume-worker"
+  script_path = "resume.js"
+  hostname    = "resume.zhangtao1994hk.asia"
+}
 
+# 管理 GitHub 仓库（如果你想保留的话）
 resource "github_repository" "resume_repo" {
   name        = "my-online-resume"
-  description = "My SRE Resume powered by Terraform and Cloudflare Workers"
   visibility  = "public"
-  auto_init   = true
 }
 
-resource "cloudflare_workers_script" "resume_worker" {
-  account_id = var.cloudflare_account_id
-  name       = "resume-worker"
-  content    = file("resume.js")
-
-  compatibility_date = "2024-04-01"
-
+# --- 核心：状态平移，防止删除重建 ---
+moved {
+  from = cloudflare_workers_script.resume_worker
+  to   = module.resume_site.cloudflare_workers_script.this
 }
 
-resource "cloudflare_workers_domain" "resume_custom_domain" {
-  account_id = var.cloudflare_account_id
-  zone_id    = var.cloudflare_zone_id
-  hostname   = "resume.zhangtao1994hk.asia"
-  service    = cloudflare_workers_script.resume_worker.name
+moved {
+  from = cloudflare_workers_domain.resume_custom_domain
+  to   = module.resume_site.cloudflare_workers_domain.this
 }
-
-
-/* 
-resource "cloudflare_record" "resume_dns" {
-  zone_id = var.cloudflare_zone_id
-  name    = "resume"
-  content = "${cloudflare_workers_script.resume_worker.name}.zhangtao1994hk.workers.dev"
-  type    = "CNAME"
-  proxied = true
-}
-*/
