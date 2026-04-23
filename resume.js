@@ -8,7 +8,7 @@ async function handleRequest(request) {
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>张 涛 Zhang Tao - SRE Resume</title>
+      <title>Zhang Tao - SRE Resume</title>
       <style>
         body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f4f4; }
         .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -18,7 +18,7 @@ async function handleRequest(request) {
     </head>
     <body>
       <div class="card">
-        <h1>Zhang Tao</h1>
+        <h1>张 涛 Zhang Tao</h1>
         <p><strong>Site Reliability Engineer</strong></p>
         <div class="tech-stack">
           <span>Terraform</span><span>GKE</span><span>MySQL</span><span>Cloudflare</span>
