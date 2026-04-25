@@ -19,9 +19,9 @@ async function handleRequest(request) {
     <body>
       <div class="card">
         <h1>张 涛 Zhang Tao</h1>
-        <p><strong>Site Reliability Engineer</strong></p>
+        <p><strong>SRE运维工程师</strong></p>
         <div class="tech-stack">
-          <span>Terraform</span><span>GKE</span><span>MySQL</span><span>Cloudflare</span>
+          <span>Terraform</span><span>GKE</span><span>Github</span><span>Cloudflare</span>
         </div>
         <h2>个人简介</h2>
         <p>专注于云原生架构运维与自动化工具开发，拥有丰富的 MySQL 性能调优与分布式系统维护经验。</p>
